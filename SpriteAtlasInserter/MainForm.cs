@@ -305,11 +305,11 @@ namespace SpriteAtlasInserter
 
         private uint RandomUInt32() => (uint)rng.NextInt64(uint.MinValue, (long)uint.MaxValue + 1);
 
-        private static void FillTexture2D(AssetTypeValueField atvf)
+        private static void FillTexture2D(AssetTypeValueField atvf, Size spriteSize)
         {
             atvf["m_ForcedFallbackFormat"].GetValue().Set(4);
-            atvf["m_Width"].GetValue().Set(128);
-            atvf["m_Height"].GetValue().Set(128);
+            atvf["m_Width"].GetValue().Set(spriteSize.Width);
+            atvf["m_Height"].GetValue().Set(spriteSize.Height);
             atvf["m_CompleteImageSize"].GetValue().Set(7744);
             atvf["m_TextureFormat"].GetValue().Set(50);
             atvf["m_MipCount"].GetValue().Set(1);
@@ -342,6 +342,7 @@ namespace SpriteAtlasInserter
                     return;
                 tif.ShowDialog();
             }
+            Size spriteSize = tif.OutSize;
 
             AssetsManager am = new();
             AssetsFileInstance afi = am.LoadAssetsFileFromBundle(bfi, 0);
@@ -350,7 +351,7 @@ namespace SpriteAtlasInserter
             AssetTypeTemplateField attf = new();
             attf.From0D(t0D, 0);
             AssetTypeValueField texture2DATVF = ValueBuilder.DefaultValueFieldFromTemplate(attf);
-            FillTexture2D(texture2DATVF);
+            FillTexture2D(texture2DATVF, spriteSize);
             texture2DATVF["m_Name"].GetValue().Set(tif.OutString + "_Texture2D");
             long texture2DPathID = RandomInt64();
             ars.Add(new AssetsReplacerFromMemory(0, texture2DPathID, 28, 0xFFFF, texture2DATVF.WriteToByteArray()));
@@ -361,8 +362,8 @@ namespace SpriteAtlasInserter
             spriteATVF["m_Name"].GetValue().Set(tif.OutString);
             spriteATVF["m_Rect"]["x"].GetValue().Set(0);
             spriteATVF["m_Rect"]["y"].GetValue().Set(0);
-            spriteATVF["m_Rect"]["width"].GetValue().Set(128);
-            spriteATVF["m_Rect"]["height"].GetValue().Set(128);
+            spriteATVF["m_Rect"]["width"].GetValue().Set(spriteSize.Width);
+            spriteATVF["m_Rect"]["height"].GetValue().Set(spriteSize.Height);
             spriteATVF["m_Offset"]["x"].GetValue().Set(0);
             spriteATVF["m_Offset"]["y"].GetValue().Set(0);
             uint[] renderDataKey = new uint[4];
@@ -374,8 +375,8 @@ namespace SpriteAtlasInserter
             spriteATVF["m_RenderDataKey"]["first"]["data[3]"].GetValue().Set(renderDataKey[3]);
             spriteATVF["m_RD"]["textureRect"]["x"].GetValue().Set(0);
             spriteATVF["m_RD"]["textureRect"]["y"].GetValue().Set(0);
-            spriteATVF["m_RD"]["textureRect"]["width"].GetValue().Set(128);
-            spriteATVF["m_RD"]["textureRect"]["height"].GetValue().Set(128);
+            spriteATVF["m_RD"]["textureRect"]["width"].GetValue().Set(spriteSize.Width);
+            spriteATVF["m_RD"]["textureRect"]["height"].GetValue().Set(spriteSize.Height);
             spriteATVF["m_RD"]["textureRectOffset"]["x"].GetValue().Set(0);
             spriteATVF["m_RD"]["textureRectOffset"]["y"].GetValue().Set(0);
             long spritePathID = RandomInt64();
@@ -394,8 +395,8 @@ namespace SpriteAtlasInserter
             sae.renderData.second.alphaTexture.pathID = 0;
             sae.renderData.second.textureRect.X = 0;
             sae.renderData.second.textureRect.Y = 0;
-            sae.renderData.second.textureRect.Width = 128;
-            sae.renderData.second.textureRect.Height = 128;
+            sae.renderData.second.textureRect.Width = spriteSize.Width;
+            sae.renderData.second.textureRect.Height = spriteSize.Height;
             sae.renderData.second.textureRectOffset.X = 0;
             sae.renderData.second.textureRectOffset.Y = 0;
             sae.renderData.second.atlasRectOffset.X = 0;

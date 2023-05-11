@@ -1,38 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace SpriteAtlasInserter
+﻿namespace SpriteAtlasInserter
 {
     public partial class TextInputForm : Form
     {
-        private string outString;
-        public string OutString { get { return outString; } }
+        private string _outString;
+        public string OutString { get { return _outString; } }
+
+        private Size _outSize;
+        public Size OutSize { get { return _outSize; } }
 
         public TextInputForm(string caption, string message, string defaultInput)
         {
             InitializeComponent();
 
-            this.Text = caption;
+            Text = caption;
             label.Text = message;
-            outString = defaultInput;
+            _outString = defaultInput;
             richTextBox.Text = defaultInput;
         }
 
         private void OutTextChanged(object sender, EventArgs e)
         {
-            outString = richTextBox.Text;
+            _outString = richTextBox.Text;
         }
 
         private void ConfirmClick(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
+        }
+
+        private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            _outSize = new((int)numericUpDown1.Value, (int)numericUpDown2.Value);
         }
     }
 }
