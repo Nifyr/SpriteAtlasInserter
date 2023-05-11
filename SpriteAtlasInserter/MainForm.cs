@@ -12,6 +12,7 @@ namespace SpriteAtlasInserter
         private readonly List<AssetsReplacer> ars;
         private string fileName;
         private BundleFileInstance bfi;
+        private Size lastSize = new(128, 128);
         public MainForm()
         {
             InitializeComponent();
@@ -334,7 +335,7 @@ namespace SpriteAtlasInserter
 
         private void InsertDummy(object sender, EventArgs e)
         {
-            TextInputForm tif = new("Sprite Name", "Input the name of the new sprite:", "NEW_SPRITE");
+            TextInputForm tif = new("Sprite Name", "Input the name of the new sprite:", "NEW_SPRITE", lastSize);
             tif.ShowDialog();
             while (NameExists(tif.OutString))
             {
@@ -343,6 +344,7 @@ namespace SpriteAtlasInserter
                 tif.ShowDialog();
             }
             Size spriteSize = tif.OutSize;
+            lastSize = spriteSize;
 
             AssetsManager am = new();
             AssetsFileInstance afi = am.LoadAssetsFileFromBundle(bfi, 0);
@@ -436,9 +438,9 @@ namespace SpriteAtlasInserter
                 spriteNameATVFs.Add(spriteName);
                 AssetTypeValueField renderDataPair = ValueBuilder.DefaultValueFieldFromTemplate(renderDataPairATTF);
                 renderDataPair["first"]["first"]["data[0]"].GetValue().Set(sae.renderData.first.first[0]);
-                renderDataPair["first"]["first"]["data[1]"].GetValue().Set(sae.renderData.first.first[0]);
-                renderDataPair["first"]["first"]["data[2]"].GetValue().Set(sae.renderData.first.first[0]);
-                renderDataPair["first"]["first"]["data[3]"].GetValue().Set(sae.renderData.first.first[0]);
+                renderDataPair["first"]["first"]["data[1]"].GetValue().Set(sae.renderData.first.first[1]);
+                renderDataPair["first"]["first"]["data[2]"].GetValue().Set(sae.renderData.first.first[2]);
+                renderDataPair["first"]["first"]["data[3]"].GetValue().Set(sae.renderData.first.first[3]);
                 renderDataPair["first"]["second"].GetValue().Set(sae.renderData.first.second);
                 renderDataPair["second"]["texture"]["m_FileID"].GetValue().Set(sae.renderData.second.texture.fileID);
                 renderDataPair["second"]["texture"]["m_PathID"].GetValue().Set(sae.renderData.second.texture.pathID);
@@ -477,6 +479,7 @@ namespace SpriteAtlasInserter
             afw.Close();
             am = new();
             bfi = am.LoadBundleFile(fileLocation, false);
+            Directory.CreateDirectory(outputDir);
             if (File.Exists(outputDir + "\\" + fileName))
                 File.Delete(outputDir + "\\" + fileName);
             FileStream stream = File.OpenWrite(outputDir + "\\" + fileName);

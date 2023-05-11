@@ -8,14 +8,17 @@
         private Size _outSize;
         public Size OutSize { get { return _outSize; } }
 
-        public TextInputForm(string caption, string message, string defaultInput)
+        public TextInputForm(string caption, string message, string defaultInput, Size defaultSize)
         {
             InitializeComponent();
 
             Text = caption;
             label.Text = message;
             _outString = defaultInput;
+            _outSize = defaultSize;
             richTextBox.Text = defaultInput;
+            numericUpDown1.Value = defaultSize.Width;
+            numericUpDown2.Value = defaultSize.Height;
         }
 
         private void OutTextChanged(object sender, EventArgs e)
