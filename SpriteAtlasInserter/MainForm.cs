@@ -131,9 +131,9 @@ namespace SpriteAtlasInserter
             selectedSAE.renderData.first.first[3] = (uint)guidNumericUpDown3.Value;
             selectedSAE.renderData.first.second = (long)renderDataKeyNumericUpDown.Value;
             selectedSAE.renderData.second.texture.fileID = (int)textureFileIDNumericUpDown.Value;
-            selectedSAE.renderData.second.texture.pathID = (int)texturePathIDNumericUpDown.Value;
+            selectedSAE.renderData.second.texture.pathID = (long)texturePathIDNumericUpDown.Value;
             selectedSAE.renderData.second.alphaTexture.fileID = (int)alphaTextureFileIDNumericUpDown.Value;
-            selectedSAE.renderData.second.alphaTexture.pathID = (int)alphaTexturePathIDNumericUpDown.Value;
+            selectedSAE.renderData.second.alphaTexture.pathID = (long)alphaTexturePathIDNumericUpDown.Value;
             selectedSAE.renderData.second.textureRect.X = (float)textureRectXNumericUpDown.Value;
             selectedSAE.renderData.second.textureRect.Y = (float)textureRectYNumericUpDown.Value;
             selectedSAE.renderData.second.textureRect.Width = (float)textureRectWidthNumericUpDown.Value;
